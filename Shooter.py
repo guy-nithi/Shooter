@@ -23,6 +23,8 @@ ROWS = 16
 COLS = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS
 TILE_TYPES = 21
+screen_scroll = 0
+bg_scroll = 0
 level = 1
 
 moving_left = False
@@ -133,6 +135,7 @@ class Soldier(pygame.sprite.Sprite):
 
     def move(self, moving_left, moving_right):
         # Reset movement variables
+        screen_scroll = 0
         dx = 0
         dy = 0
 
@@ -179,6 +182,12 @@ class Soldier(pygame.sprite.Sprite):
         # Update rectangel position
         self.rect.x += dx
         self.rect.y += dy
+
+        # Update scroll based on player position
+        if self.char_type == 'player':
+            if self.rect.right > SCREEN_WIDTH - SCROLL_THRESH or self.rect.left < SCROLL_THRESH:
+                self.rect.x -= dx
+                screen_scroll = -dx
 
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
