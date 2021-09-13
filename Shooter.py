@@ -168,6 +168,10 @@ class Soldier(pygame.sprite.Sprite):
             # Check collision in the x direction
             if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
                 dx = 0
+                # If the ai has hit a wall then make it turn around
+                if self.char_type == 'enemy':
+                    self.direction *= -1
+                    self.move_counter = 0
             # Check for collision in the y direction
             if tile[1].colliderect(self.rect.x + dy, self.rect.y, self.width, self.height):
                 # Check if below the ground, i.e. jumping
