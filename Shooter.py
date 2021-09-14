@@ -309,7 +309,7 @@ class World():
                         player = Soldier('player', x * TILE_SIZE, y * TILE_SIZE, 1.65, 5, 20, 5)
                         health_bar = HealthBar(10, 10, player.health, player.health)
                     elif tile == 16:
-                        enemy = Soldier('enemy', x * TILE_SIZE, y * TILE_SIZE, 1.65, 2, 20, 0)
+                        enemy = Soldier('enemy', x * TILE_SIZE, y * TILE_SIZE, 1.65, 2, 10, 1)
                         enemy_group.add(enemy)
                     elif tile == 17: # Create ammo box
                         item_box = ItemBox('Ammo', x * TILE_SIZE, y * TILE_SIZE)
