@@ -26,6 +26,7 @@ TILE_TYPES = 21
 screen_scroll = 0
 bg_scroll = 0
 level = 1
+start_game = False
 
 moving_left = False
 moving_right = False
@@ -552,66 +553,70 @@ while run:
 
     clock.tick(FPS)
 
-    # Update background
-    draw_bg()
-    # Draw world
-    world.draw()
-    # Show player health
-    health_bar.draw(player.health)
-    # Show ammo
-    draw_text(f'AMMO: ', font, WHITE, 10, 35)
-    for x in range(player.ammo):
-        screen.blit(bullet_img, (130 + (x * 10), 55))
-    # Show grenades
-    draw_text(f'GRENADES: ', font, WHITE, 10, 60)
-    for x in range(player.grenades):
-        screen.blit(grenade_img, (190 + (x * 15), 75))
+    if start_game == False:
+        # Draw menu
+        screen.fill(BG)
+    else:
+        # Update background
+        draw_bg()
+        # Draw world
+        world.draw()
+        # Show player health
+        health_bar.draw(player.health)
+        # Show ammo
+        draw_text(f'AMMO: ', font, WHITE, 10, 35)
+        for x in range(player.ammo):
+            screen.blit(bullet_img, (130 + (x * 10), 55))
+        # Show grenades
+        draw_text(f'GRENADES: ', font, WHITE, 10, 60)
+        for x in range(player.grenades):
+            screen.blit(grenade_img, (190 + (x * 15), 75))
 
-    player.update()
-    player.draw()
+        player.update()
+        player.draw()
 
-    for enemy in enemy_group:
-        enemy.ai()
-        enemy.update()
-        enemy.draw()
+        for enemy in enemy_group:
+            enemy.ai()
+            enemy.update()
+            enemy.draw()
 
-    # Update and draw groups
-    bullet_group.update()
-    grenade_group.update()
-    explosion_group.update()
-    item_box_group.update()
-    decoration_group.update()
-    water_group.update()
-    exit_group.update()
+        # Update and draw groups
+        bullet_group.update()
+        grenade_group.update()
+        explosion_group.update()
+        item_box_group.update()
+        decoration_group.update()
+        water_group.update()
+        exit_group.update()
 
-    bullet_group.draw(screen)
-    grenade_group.draw(screen)
-    explosion_group.draw(screen)
-    item_box_group.draw(screen)
-    decoration_group.draw(screen)
-    water_group.draw(screen)
-    exit_group.draw(screen)
+        bullet_group.draw(screen)
+        grenade_group.draw(screen)
+        explosion_group.draw(screen)
+        item_box_group.draw(screen)
+        decoration_group.draw(screen)
+        water_group.draw(screen)
+        exit_group.draw(screen)
 
 
-    # Update players actions
-    if player.alive:
-        # Shoot bullet
-        if shoot:
-            player.shoot()
-        # Throw grenades
-        elif grenade and grenade_thrown == False and player.grenades > 0:
-            grenade = Grenade(player.rect.centerx + (0.5 * player.rect.size[0]) * player.direction, player.rect.top, player.direction)
-            grenade_group.add(grenade)
-            player.grenades -= 1
-            grenade_thrown = True
-        if player.in_air:
-            player.update_action(2)
-        elif moving_left or moving_right:
-            player.update_action(1) # 1: run
-        else:
-            player.update_action(0)#0: idle
-        screen_scroll = player.move(moving_left, moving_right)
-        bg_scroll -= screen_scroll
+        # Update players actions
+        if player.alive:
+            # Shoot bullet
+            if shoot:
+                player.shoot()
+            # Throw grenades
+            elif grenade and grenade_thrown == False and player.grenades > 0:
+                grenade = Grenade(player.rect.centerx + (0.5 * player.rect.size[0]) * player.direction, player.rect.top, player.direction)
+                grenade_group.add(grenade)
+                player.grenades -= 1
+                grenade_thrown = True
+            if player.in_air:
+                player.update_action(2)
+            elif moving_left or moving_right:
+                player.update_action(1) # 1: run
+            else:
+                player.update_action(0)#0: idle
+            screen_scroll = player.move(moving_left, moving_right)
+            bg_scroll -= screen_scroll
     
     for event in pygame.event.get():
         # quit game
