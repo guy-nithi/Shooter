@@ -756,15 +756,15 @@ while run:
             run = False
         # Keyboard presses
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 moving_left = True
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 moving_right = True
             if event.key == pygame.K_SPACE:
                 shoot = True
             if event.key == pygame.K_g:
                 grenade = True
-            if event.key == pygame.K_w and player.alive:
+            if event.key == pygame.K_w  or event.key == pygame.K_UP and player.alive:
                 player.jump = True
                 jump_fx.play()
             if event.key == pygame.K_ESCAPE:
@@ -772,9 +772,9 @@ while run:
 
         # Keyboard realease
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 moving_left = False
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 moving_right = False
             if event.key == pygame.K_SPACE:
                 shoot = False
