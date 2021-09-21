@@ -143,9 +143,9 @@ while run:
         # Load in level data
         # Reset scroll back to the start of the level
         scroll = 0
-        # world_data = []
+    # world_data = []
         # pickle_in = open(f'level{level}_data', 'rb')
-        # world_data = pickle.load(pickle_in)
+        # world_data = pickle.load(pickle_in)6
         with open(f'level{level}_data.csv', newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter = ',')
             for x, row in enumerate(reader):
